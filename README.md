@@ -1,6 +1,8 @@
 # Receipt Processor
 
-A GO webservice program that fulfills the document API presented by Fetch Rewards.   Implements Docker for deployment.
+Submitted By Christian Cardenas
+
+My implementation of a GO webservice program that fulfills the document API presented by Fetch Rewards.   Implements Docker for deployment.
 
 ---
 ## Summary of API Specification

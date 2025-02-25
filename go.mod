@@ -1,4 +1,4 @@
-module receipt-processor-challenge
+module github.com/cardenasc33/goapi
 
 go 1.23.5
 

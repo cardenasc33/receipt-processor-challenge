@@ -3,9 +3,10 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-	"receipt-processor-challenge/responses"
+	"fmt"
 
-	"github.com/cardenasc33/receipt-processor-challenge/internal/api"
+	"github.com/cardenasc33/receipt-processor-challenge/responses"
+	"github.com/cardenasc33/receipt-processor-challenge/internal/tools"
 	"github.com/gorilla/schema"
 	log "github.com/sirupsen/logrus"
 )
@@ -26,7 +27,7 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Error(err)
-		api.InternalErrorHandler(w)
+		responses.InternalErrorHandler(w)
 		return 
 	}
 
@@ -34,7 +35,34 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 	var database *tools.DatabaseInterface
 	database, err = tools.NewDatabase()
 	if err != nil {
-		api.InternalErrorHandler(w)
+		responses.InternalErrorHandler(w)
+		return
+	}
+
+	// Call GetPointsAwarded method
+	var receiptDetails *tools.ReceiptDetails
+	receiptDetails = (*database).GetReceiptDetails(params.ReceiptID)
+	if receiptDetails == nil {
+		log.Error(err)
+		responses.InternalErrorHandler(w)
+		return
+	}
+
+	// Set value to the response struct
+	var response = responses.AwardPointsResponse{
+		receiptID: (*receiptDetails).ReceiptID,
+		points: (*receiptDetails).Points,
+		code: http.StatusOK,
+	}
+
+	fmt.Println("Receipt ID: " , response.receiptID)
+
+	// Write the response struct to the response writer
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(response)
+	if err != nil {
+		log.Error(err)
+		response.InternalErrorHandler(w)
 		return
 	}
 }

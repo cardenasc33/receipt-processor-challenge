@@ -41,7 +41,7 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 
 	// Call GetPointsAwarded method
 	var receiptDetails *tools.ReceiptDetails
-	receiptDetails = (*database).GetReceiptDetails(params.ReceiptID)
+	receiptDetails = (*database).GetPointsAwarded(params.ReceiptID)
 	if receiptDetails == nil {
 		log.Error(err)
 		responses.InternalErrorHandler(w)

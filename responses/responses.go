@@ -22,6 +22,9 @@ type AwardPointsResponse struct {
 
 	// Points awarded for receipt 
 	points int64
+
+	// Receipt ID
+	receiptID string
 }
 
 // Error Response Struct:

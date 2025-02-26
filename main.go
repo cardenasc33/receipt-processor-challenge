@@ -9,12 +9,13 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+
 func main(){
 	log.SetReportCaller(true)  // Logs the file and line number when print is performed
 
 	// Returns a pointer to a MUX type
 	var r *chi.Mux = chi.NewRouter()  //struct to set up API
-	handlers.Handler(r)	// Set up router, i.e. add endpoint defintions
+	handlers.Handler(r)	// Set up router, i.e. add endpoint definitions
 
 	fmt.Println("Starting GO API service...")
 

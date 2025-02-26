@@ -19,7 +19,7 @@ var mockReceiptDetails = map[string]ReceiptDetails{
 
 // Define and conform to database interface in
 // receipt-processor-challenge/internal/tools/database.go
-// Needed: GetPointsAwarded and SetupDatabase
+// Needed: GetReceiptPoints and SetupDatabase
 
 func (d *mockDB) GetReceiptPoints(receiptId string) *ReceiptDetails {
 	// Simulate DB call

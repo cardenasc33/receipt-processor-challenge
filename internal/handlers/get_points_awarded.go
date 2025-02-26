@@ -11,7 +11,16 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
+// CORS (Cross-Origin Region Sharing) allows the client browser to check with the third-party servers if the request is authorized before any data transfers.
+func enableCors(res *http.ResponseWriter) {
+	(*res).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
+
+func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
+
+	enableCors(&res)
+	
 	// Grab points awarded from the parameters passed in
 
 	// Decode parameters
@@ -24,11 +33,17 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 	// e.g. Grab receipt ID in URL and put it in the receiptId field
 	// in the struct
 
-	err = decoder.Decode(&params, r.URL.Query())
+	fmt.Println("&params: ", &params)
+	err = decoder.Decode(&params, req.URL.Query())
+    
+	fmt.Println("r.URL.Query: ", req.URL.Query())
+	fmt.Println("err: ", err)
+// 	myUrl, _ := url.Parse(urlStr)
+// params, _ := url.ParseQuery(myUrl.RawQuery)
 
 	if err != nil {
 		log.Error(err)
-		responses.InternalErrorHandler(w)
+		responses.InternalErrorHandler(res)
 		return 
 	}
 
@@ -36,7 +51,7 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 	var database *tools.DatabaseInterface
 	database, err = tools.NewDatabase()
 	if err != nil {
-		responses.InternalErrorHandler(w)
+		responses.InternalErrorHandler(res)
 		return
 	}
 
@@ -45,7 +60,7 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 	receiptDetails = (*database).GetReceiptPoints(params.ReceiptID)
 	if receiptDetails == nil {
 		log.Error(err)
-		responses.InternalErrorHandler(w)
+		responses.InternalErrorHandler(res)
 		return
 	}
 
@@ -59,11 +74,11 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Receipt ID: " , response.ReceiptID)
 
 	// Write the response struct to the response writer
-	w.Header().Set("Content-Type", "application/json")
-	err = json.NewEncoder(w).Encode(response)
+	res.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(res).Encode(response)
 	if err != nil {
 		log.Error(err)
-		responses.InternalErrorHandler(w)
+		responses.InternalErrorHandler(res)
 		return
 	}
 }

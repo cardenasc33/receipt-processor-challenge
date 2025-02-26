@@ -10,7 +10,7 @@ import (
 // Receipt ID Params Struct:
 // Represents parameters that the API endpoint will take
 type ReceiptIdParams struct {
-	receiptId string 
+	ReceiptID string 
 }
 
 // Reward Points Response:
@@ -18,13 +18,13 @@ type ReceiptIdParams struct {
 // containing the status code and awarded points as a response
 type AwardPointsResponse struct {
 	// Success Code, Usually 200
-	code int 
+	StatusCode int 
 
 	// Points awarded for receipt 
-	points int64
+	Points int64
 
 	// Receipt ID
-	receiptID string
+	ReceiptID string
 }
 
 // Error Response Struct:

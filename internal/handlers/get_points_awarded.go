@@ -16,6 +16,7 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 
 	// Decode parameters
 	var params = responses.ReceiptIdParams{}
+	fmt.Println(params)
 	var decoder *schema.Decoder = schema.NewDecoder()
 	var err error
 
@@ -50,19 +51,19 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 
 	// Set value to the response struct
 	var response = responses.AwardPointsResponse{
-		receiptID: (*receiptDetails).ReceiptID,
-		points: (*receiptDetails).Points,
-		code: http.StatusOK,
+		ReceiptID: (*receiptDetails).ReceiptID,
+		Points: (*receiptDetails).Points,
+		StatusCode: http.StatusOK,
 	}
 
-	fmt.Println("Receipt ID: " , response.receiptID)
+	fmt.Println("Receipt ID: " , response.ReceiptID)
 
 	// Write the response struct to the response writer
 	w.Header().Set("Content-Type", "application/json")
 	err = json.NewEncoder(w).Encode(response)
 	if err != nil {
 		log.Error(err)
-		response.InternalErrorHandler(w)
+		responses.InternalErrorHandler(w)
 		return
 	}
 }

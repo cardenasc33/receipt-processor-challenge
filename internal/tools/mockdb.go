@@ -21,7 +21,7 @@ var mockReceiptDetails = map[string]ReceiptDetails{
 // receipt-processor-challenge/internal/tools/database.go
 // Needed: GetPointsAwarded and SetupDatabase
 
-func (d *mockDB) GetPointsAwarded(receiptId string) *ReceiptDetails {
+func (d *mockDB) GetReceiptPoints(receiptId string) *ReceiptDetails {
 	// Simulate DB call
 	time.Sleep(time.Second * 1)
 

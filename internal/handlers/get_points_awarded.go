@@ -16,7 +16,7 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 
 	// Decode parameters
 	var params = responses.ReceiptIdParams{}
-	fmt.Println(params)
+	fmt.Println("Params: " , params)
 	var decoder *schema.Decoder = schema.NewDecoder()
 	var err error
 
@@ -40,9 +40,9 @@ func GetPointsAwarded(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Call GetPointsAwarded method
+	// Call GetReceiptPoints method
 	var receiptDetails *tools.ReceiptDetails
-	receiptDetails = (*database).GetPointsAwarded(params.ReceiptID)
+	receiptDetails = (*database).GetReceiptPoints(params.ReceiptID)
 	if receiptDetails == nil {
 		log.Error(err)
 		responses.InternalErrorHandler(w)

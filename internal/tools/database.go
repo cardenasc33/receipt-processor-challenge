@@ -14,10 +14,10 @@ type ReceiptDetails struct {
 
 // Define methods for api
 // Able to swap databases as long as 
-// GetPointsAwarded and SetupDatabase are defined
+// GetReceiptPoints and SetupDatabase are defined
 // (see /tools/mockdb.go)
 type DatabaseInterface interface {
-	GetPointsAwarded(receiptId string) *ReceiptDetails
+	GetReceiptPoints(receiptId string) *ReceiptDetails
 	SetupDatabase() error 
 }
 

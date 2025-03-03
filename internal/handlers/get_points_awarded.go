@@ -11,11 +11,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// CORS (Cross-Origin Region Sharing) allows the client browser to check with the third-party servers if the request is authorized before any data transfers.
-func enableCors(res *http.ResponseWriter) {
-	(*res).Header().Set("Access-Control-Allow-Origin", "*")
-}
-
 // Get the points awarded for receipt with provided id in http request
 func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 

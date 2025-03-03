@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"fmt"
+	"net/http"
+	"github.com/google/uuid" // used to create unique ids
 )
 
 /*
@@ -18,8 +20,11 @@ import (
 	Example Response:
 
 	{ "id": "7fb1377b-b223-49d9-a31a-5a02701dd310" }
- */
+*/
 
-func ProcessReceipts() {
-	fmt.Println("Process Receipts Function: ")
+// uuid function : Universally Unique Identifier – is a 36-character alphanumeric string that used to create unique ids
+func ProcessReceipts(res http.ResponseWriter, req *http.Request) {
+	enableCors(&res)
+
+	fmt.Println("UUID: ", uuid.New().String())
 }

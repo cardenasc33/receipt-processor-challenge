@@ -8,7 +8,6 @@ import (
 	"github.com/cardenasc33/receipt-processor-challenge/internal/tools"
 	"github.com/cardenasc33/receipt-processor-challenge/responses"
 	"github.com/go-chi/chi"
-	// "github.com/gorilla/schema"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -17,52 +16,22 @@ func enableCors(res *http.ResponseWriter) {
 	(*res).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
-
+// Get the points awarded for receipt with provided id in http request
 func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 
 	enableCors(&res)
 
-	// func main() {
-	// 	r := chi.NewRouter()
-	// 	r.Get("/users/{userID}", getUser)
-	// 	http.ListenAndServe(":3000", r)
-	// }
-	
-	// func getUser(w http.ResponseWriter, r *http.Request) {
-	// 	userID := chi.URLParam(r, "userID")
-	// 	fmt.Fprintf(w, "User ID: %s\n", userID)
-	// }
-
-	// fmt.Println("Request Parameter: ", req.URL.Query().Get("/receipts/{id}/points"))
+	// Get the URL parameter entered for {id} in 
+	// http://localhost:8000/receipts/{id}/points
 	var idParam = chi.URLParam(req, "id")
 	fmt.Println("ID Parameter: ", idParam)
 
-	
-	
-	// Grab points awarded from the parameters passed in
-
-	// Decode parameters
+	// Set the ReceiptIdParams struct ReceiptID field to the id parameter entered from the URL
 	var params = responses.ReceiptIdParams{}
-	// var decoder *schema.Decoder = schema.NewDecoder()
-	var err error
-
 	params.ReceiptID = idParam
 
-	// Grab params from URL and set them to the values in the struct
-	// e.g. Grab receipt ID in URL and put it in the receiptId field
-	// in the struct
 
-	// err = decoder.Decode(&params, req.URL.Query())
-	// err = decoder.Decode(&params, req.URL.Query())
-
-// 	myUrl, _ := url.Parse(urlStr)
-// params, _ := url.ParseQuery(myUrl.RawQuery)
-
-	// if err != nil {
-	// 	log.Error(err)
-	// 	responses.InternalErrorHandler(res)
-	// 	return 
-	// }
+	var err error
 
 	// instantiate a db interface
 	var database *tools.DatabaseInterface

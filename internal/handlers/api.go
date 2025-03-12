@@ -23,4 +23,5 @@ func Handler (r *chi.Mux) {
 
 		router.Get("/{id}/points", GetPointsAwarded)
 	})
+
 }

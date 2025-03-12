@@ -4,12 +4,21 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
-	"github.com/cardenasc33/receipt-processor-challenge/internal/tools"
 	"github.com/cardenasc33/receipt-processor-challenge/responses"
 	"github.com/go-chi/chi"
 	log "github.com/sirupsen/logrus"
 )
+
+/*
+	Path: /receipts/{id}/points
+	Method: GET
+	Response: A JSON object containing the number of points awarded.
+	A simple Getter endpoint that looks up the receipt by the ID and returns an object specifying the points awarded.
+
+	Example Response:
+
+	{ "points": 32 }
+*/ 
 
 // Get the points awarded for receipt with provided id in http request
 func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
@@ -28,32 +37,21 @@ func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 
 	var err error
 
-	// instantiate a db interface
-	var database *tools.DatabaseInterface
-	database, err = tools.NewDatabase()
-	if err != nil {
-		responses.InternalErrorHandler(res)
-		return
-	}
-
-	// Call GetReceiptPoints method
-	var receiptDetails *tools.ReceiptDetails
-	receiptDetails = (*database).GetReceiptPoints(params.ReceiptID)
-	fmt.Println("Params.ReceiptID Struct: ", params.ReceiptID)
-	if receiptDetails == nil {
-		log.Error(err)
-		responses.InternalErrorHandler(res)
+	// // TODO complete response with Receipt Struct
+	receiptPointsById, ok := inMemoryReceiptMap[params.ReceiptID]
+	if !ok {
+		log.Printf("[ getReceiptPoints: receipt does not exist in in-memory map with id \"%s\" ] \n", params.ReceiptID)
+		res.Header().Set("x-receipt-not-exist", params.ReceiptID)
+		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Set value to the response struct
 	var response = responses.AwardPointsResponse{
-		ReceiptID: (*receiptDetails).ReceiptID,
-		Points: (*receiptDetails).Points,
+		ReceiptID: receiptPointsById.Id,
+		Points: int64(receiptPointsById.Points),
 		StatusCode: http.StatusOK,
 	}
-
-	fmt.Println("Receipt ID: " , response.ReceiptID)
 
 	// Write the response struct to the response writer
 	res.Header().Set("Content-Type", "application/json")

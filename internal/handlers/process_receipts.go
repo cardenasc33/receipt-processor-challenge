@@ -33,7 +33,6 @@ var inMemoryReceiptMap = make(map[string]tools.Receipt)
 
 // uuid function : Universally Unique Identifier – is a 36-character alphanumeric string that used to create unique ids
 func ProcessReceipts(res http.ResponseWriter, req *http.Request) {
-	enableCors(&res)
 
 	// Read request body, log error if failed
 	reqBody, err := io.ReadAll(req.Body)

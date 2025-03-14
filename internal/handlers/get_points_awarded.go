@@ -24,8 +24,6 @@ import (
 // Get the points awarded for receipt with provided id in http request
 func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 
-	enableCors(&res)
-
 	// Get the URL parameter entered for {id} in 
 	// http://localhost:8000/receipts/{id}/points
 	var idParam = chi.URLParam(req, "id")

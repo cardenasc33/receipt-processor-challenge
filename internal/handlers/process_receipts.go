@@ -30,6 +30,7 @@ import (
 // key: receipt id, value: receipt object including points and id
 var inMemoryReceiptMap = make(map[string]tools.Receipt)
 
+
 // uuid function : Universally Unique Identifier – is a 36-character alphanumeric string that used to create unique ids
 func ProcessReceipts(res http.ResponseWriter, req *http.Request) {
 	enableCors(&res)

@@ -20,6 +20,7 @@ import (
 	{ "points": 32 }
 */ 
 
+
 // Get the points awarded for receipt with provided id in http request
 func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 

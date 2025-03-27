@@ -1,4 +1,4 @@
-module github.com/cardenasc33/receipt-processor-challenge
+module receipt-processor-challenge
 
 go 1.23
 

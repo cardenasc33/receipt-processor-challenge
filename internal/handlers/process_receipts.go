@@ -6,8 +6,8 @@ import (
 	"io" // Reads request body
 	"net/http"
 
-	"github.com/cardenasc33/receipt-processor-challenge/internal/tools"
-	"github.com/cardenasc33/receipt-processor-challenge/responses"
+	"receipt-processor-challenge/internal/tools"
+	"receipt-processor-challenge/responses"
 	"github.com/google/uuid" // used to create unique ids
 	log "github.com/sirupsen/logrus"
 )

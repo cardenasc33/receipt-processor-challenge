@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"github.com/cardenasc33/receipt-processor-challenge/responses"
+	"receipt-processor-challenge/responses"
 	"github.com/go-chi/chi"
 	log "github.com/sirupsen/logrus"
 )

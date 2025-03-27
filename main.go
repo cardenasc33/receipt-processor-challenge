@@ -6,7 +6,7 @@ import (
 	"os" //  used to set port environment variable
 
 	"github.com/go-chi/chi"  //package for web dev
-	"github.com/cardenasc33/receipt-processor-challenge/internal/handlers"  // import api handler functions
+	"receipt-processor-challenge/internal/handlers"  // import api handler functions
 	log "github.com/sirupsen/logrus"
 )
 

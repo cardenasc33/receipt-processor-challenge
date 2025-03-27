@@ -32,8 +32,18 @@ RUN go mod download
 # Copies the Go source code into Docker image
 COPY *.go ./
 
+WORKDIR /app/internal/handlers
+COPY *.go ./
+
+WORKDIR /app/internal/tools
+COPY *.go ./
+
+WORKDIR /app/internal/responses
+COPY *.go ./
+
 # Builds the Go application in shell form
 RUN go build -o main .
+
 
 # Stage 3: Create the final image
 

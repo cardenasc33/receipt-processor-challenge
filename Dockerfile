@@ -13,7 +13,7 @@ RUN npm install
 # Copies the rest of the frontend code into Docker image.
 COPY frontend .
 
-# Builds the React application.
+# Builds the React application in shell form
 RUN npm run build
 
 
@@ -32,7 +32,7 @@ RUN go mod download
 # Copies the Go source code into Docker image
 COPY *.go ./
 
-# Builds the Go application
+# Builds the Go application in shell form
 RUN go build -o main .
 
 # Stage 3: Create the final image
@@ -55,5 +55,5 @@ ENV PORT=8000
 # Define port that this container will listen on runtime
 EXPOSE 8000
 
-# Runs the Go application
+# Runs the Go application in exec form
 CMD ["./main"]

@@ -71,7 +71,7 @@ const App: React.FC = () => {
 
     try {
 
-      const response = await fetch('http://localhost:' + port + '/receipts/process', {
+      const response = await fetch(`http://localhost:${port}/receipts/process`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

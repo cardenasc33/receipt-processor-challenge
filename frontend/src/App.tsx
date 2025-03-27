@@ -67,11 +67,11 @@ const App: React.FC = () => {
       return;
     }
   
+    const port = process.env.PORT || 8000; // Use the environment variable or default to 8000
 
     try {
-    
 
-      const response = await fetch('http://localhost:8000/receipts/process', {
+      const response = await fetch('http://localhost:' + port + '/receipts/process', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os" //  used to set port environment variable
 
 	"github.com/go-chi/chi"  //package for web dev
 	"github.com/cardenasc33/receipt-processor-challenge/internal/handlers"  // import api handler functions
@@ -19,11 +20,20 @@ func main(){
 
 	fmt.Println("Starting GO API service...")
 
+	// Set the PORT environment variable
+	os.Setenv("PORT", "8000")
+
+	// Get the PORT environment variable
+	port := os.Getenv("PORT")
+	if port == "" {
+		fmt.Println("PORT environment variable not set")
+		return
+	}
+
 	// Start server
 	// @params: (base location of server, handler that MUX type satisfies)
-	var ip = "localhost"
-	var port = "8000"
-	var socket = ip + ":" + port
+	ip := "localhost"
+	socket := ip + ":" + port
 	fmt.Println("Serving on ", socket)
 	err := http.ListenAndServe(socket, r)
 	if err != nil {

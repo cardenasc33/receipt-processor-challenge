@@ -94,9 +94,12 @@ func DescriptionLengthReward(receipt Receipt) int {
 	// trim the length of the item description
 	for _, item := range items {
 		trimmedDescription := strings.Trim(item.Description, " ")
+		fmt.Println("Trimmed Description: ", trimmedDescription)
 		trimmedLength := len(trimmedDescription)
+		fmt.Println("Trimmed Length: ", trimmedLength)
 		if math.Mod(float64(trimmedLength), 3) == 0 {
 			// first convert price from string to float 64
+			fmt.Println("Item Price: ", item.Price)
 			itemPrice, err := strconv.ParseFloat(item.Price, 64)
 			if err != nil {
 				fmt.Println("Error converting string to float:", err)

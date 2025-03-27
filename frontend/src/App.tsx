@@ -4,10 +4,9 @@ import Modal from './Modal';
 import './Modal.css'; 
 
 interface Item {
-  name: string;
-  price: number;
+  Description: string;
+  Price: string;
 }
-
 
 
 const App: React.FC = () => {
@@ -34,7 +33,7 @@ const App: React.FC = () => {
   }
   
 
-  const totalPrice = items.reduce((total, item) => total + item.price, 0);
+  const totalPrice = items.reduce((total, item) => total + parseFloat(item.Price), 0);
   console.log("Total Price: " , totalPrice)
 
 
@@ -49,7 +48,7 @@ const App: React.FC = () => {
   const handleAddItem = () => {
     const price = parseFloat(itemPrice);
     if (itemName && !isNaN(price) && price > 0) {
-      const newItem = { name: itemName, price };
+      const newItem = { Description: itemName, Price: price.toString() };
       setItems((prevItems) => [...prevItems, newItem]);
       setItemName('');
       setItemPrice('');
@@ -168,7 +167,7 @@ const App: React.FC = () => {
       <ul className="items-list">
         {items.map((item, index) => (
           <li key={index} className="item">
-            {item.name}: ${item.price.toFixed(2)}
+            {item.Description}: ${parseFloat(item.Price).toFixed(2)}
           </li>
         ))}
       </ul>

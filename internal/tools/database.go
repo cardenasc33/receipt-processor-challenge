@@ -8,7 +8,7 @@ import (
 
 type Item struct {
 	Description string
-	Price            string
+	Price       string
 }
 
 // Id will be generated with uuid from POST endpoint

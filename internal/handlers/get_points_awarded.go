@@ -25,7 +25,7 @@ import (
 func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 
 	// Get the URL parameter entered for {id} in 
-	// http://localhost:8000/receipts/{id}/points
+	// http://localhost:8080/receipts/{id}/points
 	var idParam = chi.URLParam(req, "id")
 	fmt.Println("ID Parameter: ", idParam)
 

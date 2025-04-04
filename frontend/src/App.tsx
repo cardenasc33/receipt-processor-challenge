@@ -7,6 +7,9 @@ interface Item {
   Description: string;
   Price: string;
 }
+const hostIp = process.env.DOCKER_HOST_IP || '127.0.0.1'; // Default to localhost if no env variable is set
+const port = process.env.PORT || 8080; // Use the environment variable or default to 8080
+const backendUrl = `http://${hostIp}:${port}`;
 
 
 const App: React.FC = () => {
@@ -34,7 +37,6 @@ const App: React.FC = () => {
   
 
   const totalPrice = items.reduce((total, item) => total + parseFloat(item.Price), 0);
-  console.log("Total Price: " , totalPrice)
 
 
   const data = {
@@ -67,11 +69,10 @@ const App: React.FC = () => {
       return;
     }
   
-    const port = process.env.PORT || 8000; // Use the environment variable or default to 8000
 
     try {
 
-      const response = await fetch(`http://localhost:${port}/receipts/process`, {
+      const response = await fetch(`${backendUrl}/receipts/process`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

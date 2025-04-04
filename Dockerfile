@@ -1,69 +1,13 @@
-# Stage 1: Build Frontend #
+    FROM golang:latest
 
-# Uses a node:18-alpine image as the base
-FROM node:18-alpine AS frontend-build
+    WORKDIR /app
 
-# Sets the working directory to /app/frontend.
-WORKDIR /app/frontend
+    COPY go.mod go.sum ./
 
-# Copies package*.json and installs dependencies.
-COPY frontend/package*.json ./
-RUN npm install
+    RUN go mod download
 
-# Copies the rest of the frontend code into Docker image.
-COPY frontend .
+    COPY . .
 
-# Builds the React application in shell form
-RUN npm run build
+    EXPOSE 8080
 
-
-# Stage 2: Build Backend #
-
-# Uses golang:1.20 image as the base
-FROM golang:1.20 AS backend-build
-
-# Sets the working directory to /app 
-WORKDIR /app
-
-# Copies go.mod and go.sum, downloads dependencies.
-COPY go.mod go.sum ./
-RUN go mod download
-
-# Copies the Go source code into Docker image
-COPY *.go ./
-
-WORKDIR /app/internal/handlers
-COPY *.go ./
-
-WORKDIR /app/internal/tools
-COPY *.go ./
-
-WORKDIR /app/internal/responses
-COPY *.go ./
-
-# Builds the Go application in shell form
-RUN go build -o main .
-
-
-# Stage 3: Create the final image
-
-# Uses alpine:latest as a lightweight base image
-FROM alpine:latest
-
-# Sets the working directory to /app.
-WORKDIR /app
-
-# Copies the built frontend from the frontend-build stage to the /app/public directory.
-COPY --from=frontend-build /app/frontend/build ./public
-
-# Copies the built backend from the backend-build stage.
-COPY --from=backend-build /app/main .
-
-# Set the port environment variable
-ENV PORT=8000
-
-# Define port that this container will listen on runtime
-EXPOSE 8000
-
-# Runs the Go application in exec form
-CMD ["./main"]
+    CMD ["go", "run", "main.go"]

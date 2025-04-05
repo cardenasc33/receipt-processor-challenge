@@ -7,7 +7,7 @@ My implementation of a GO webservice program that fulfills the document API pres
 This project fulfills the following:
 - API development
 - Golang backend development
-- Router implementation
+- Chi Router and HTTP server implementation
 - Data Modeling
 - Point Distribution Logic 
 - JSON encoding and processing

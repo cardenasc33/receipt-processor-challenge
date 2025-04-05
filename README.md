@@ -1,10 +1,32 @@
 # Receipt Processor
 
-Submitted By Christian Cardenas
+Implemented By Christian Cardenas
 
 My implementation of a GO webservice program that fulfills the document API presented by Fetch Rewards.   Implements Docker for deployment.
 
 ---
+### Docker Installation
+
+#### Requirements
+- Docker and Docker Compose installed
+  - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (For Windows/macOS)
+  - [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) (For Linux)
+
+#### Installation Steps
+1. Clone the repository:
+```bash
+git clone https://github.com/cardenasc33/receipt-processor-challenge.git
+```
+
+2. Run with Docker Compose:
+```bash
+# Build and start the container with docker compose
+docker compose up --build
+```
+
+This will create and run a docker container from the frontend and backend images.
+
+
 ## Summary of API Specification
 
 ### Endpoint: Process Receipts

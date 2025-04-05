@@ -30,7 +30,7 @@ The Go backend server should now be listening for API calls on port `8080`
 The frontend UI should also be available to use with `localhost:3001`.
 
 ### Using the Frontend
-1. Open a web browser and enter the `localhost:3001`.
+1. Open a web browser and enter `http://localhost:3001/` in the address bar.
 
 You should see a form to enter receipt details as shown in the following picture: 
 

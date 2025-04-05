@@ -30,10 +30,16 @@ The Go backend server should now be listening for API calls on port `8080`
 The frontend UI should also be available to use with `localhost:3001`.
 
 ### Using the Frontend
-1. Open a webrowser and enter the `localhost:3001`.
+1. Open a web browser and enter the `localhost:3001`.
 
 You should see a form to enter receipt details as shown in the following picture: 
 
+![receipt-processor-frontend-ui](https://github.com/user-attachments/assets/95295886-0cff-48bd-a0a4-eb189dbb0d57)
+
+
+Once you successfully submit a receipt, you will be given points and a unique receipt ID:
+
+![Receipt submission 1](https://github.com/user-attachments/assets/9184653e-132c-4b46-8a82-f45c4380847d)
 
 
 ## Summary of API Specification

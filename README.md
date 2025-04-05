@@ -9,6 +9,7 @@ This project fulfills the following:
 - Golang backend development
 - Router implementation
 - Data Modeling
+- Point Distribution Logic 
 - JSON encoding and processing
 - React, Typescript frontend communication
 - Docker & Docker Compose deployment

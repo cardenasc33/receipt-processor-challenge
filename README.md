@@ -37,7 +37,7 @@ docker compose up --build
 ```
 
 This will create and run a docker container from the frontend and backend images.
-The Go backend server should now be listening for API calls on port `8080`
+The Go backend server should now be listening for API requests on port `8080`
 
 The frontend UI should also be available to use with `localhost:3001`.
 

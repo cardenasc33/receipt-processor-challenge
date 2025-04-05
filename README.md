@@ -19,13 +19,21 @@ My implementation of a GO webservice program that fulfills the document API pres
 git clone https://github.com/cardenasc33/receipt-processor-challenge.git
 ```
 
-2. Run with Docker Compose:
+2. Build and start the container with docker compose:
 ```bash
-# Build and start the container with docker compose
 docker compose up --build
 ```
 
 This will create and run a docker container from the frontend and backend images.
+The Go backend server should now be listening for API calls on port `8080`
+
+The frontend UI should also be available to use with `localhost:3001`.
+
+### Using the Frontend
+1. Open a webrowser and enter the `localhost:3001`.
+
+You should see a form to enter receipt details as shown in the following picture: 
+
 
 
 ## Summary of API Specification

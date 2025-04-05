@@ -5,7 +5,8 @@ Implemented By Christian Cardenas
 My implementation of a GO webservice program that fulfills the document API presented by Fetch Rewards.   Implements Docker for deployment.
 
 ---
-### Docker Installation
+
+## Run Using Docker
 
 #### Requirements
 - Docker and Docker Compose installed

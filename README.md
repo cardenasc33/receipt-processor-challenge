@@ -52,6 +52,14 @@ Once you successfully submit a receipt, you will be given points and a unique re
 
 ![Receipt submission 1](https://github.com/user-attachments/assets/9184653e-132c-4b46-8a82-f45c4380847d)
 
+## API Testing Using Postman
+
+#### Requirements
+- Postman
+  - [Postman Desktop](https://www.postman.com/downloads/) (For Windows/macOS)
+  - [Postman Web Version](https://web.postman.co/workspace/2fe918f7-271f-4945-86d8-fe88def81d0b/request/create?requestId=148eaa03-e183-4b9c-a2e2-a822ed867551)
+ 
+
 
 ## Summary of API Specification
 

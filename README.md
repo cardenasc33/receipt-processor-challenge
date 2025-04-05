@@ -68,7 +68,7 @@ Once you successfully submit a receipt, you will be given points and a unique re
 3. Navigate to `Body` and select `raw` & `JSON`.
 
 4. Enter the JSON data of the receipt.
-NOTE:  The JSON data should include retailer name, an item name & price, purchase date, purchase time of the item.  (See `receipt-processor-challenge/examples/morning-receipt.json` for structure and data examples)
+NOTE:  The JSON data should include retailer name, an item name & price, purchase date, purchase time of the item.  (See `receipt-processor-challenge/examples/morning-receipt.json` file for structure and data examples)
 
 ![receipt-POST](https://github.com/user-attachments/assets/6c9c37c3-680a-4bd6-9a77-64edf59080ac)
 

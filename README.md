@@ -11,6 +11,7 @@ This project fulfills the following:
 - Data Modeling
 - Point Distribution Logic 
 - JSON encoding and processing
+- Error logging & handling
 - React, Typescript frontend communication
 - Docker & Docker Compose deployment
 ---
@@ -59,6 +60,12 @@ Once you successfully submit a receipt, you will be given points and a unique re
   - [Postman Desktop](https://www.postman.com/downloads/) (For Windows/macOS)
   - [Postman Web Version](https://web.postman.co/workspace/2fe918f7-271f-4945-86d8-fe88def81d0b/request/create?requestId=148eaa03-e183-4b9c-a2e2-a822ed867551)
  
+## Testing GET Endpoint
+1. Set the request to `GET` within Postman.
+
+2. Next enter the endpoint: `http://localhost:8080/receipts/{ReceiptID}/point`.  Replace {ReceiptID} with the receipt ID you just received from the message body of the POST request. 
+
+![receipt-GET](https://github.com/user-attachments/assets/73838dba-0f23-49a3-8781-b5c6998d3c74)
 
 
 ## Summary of API Specification

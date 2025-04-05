@@ -2,8 +2,15 @@
 
 Implemented By Christian Cardenas
 
-My implementation of a GO webservice program that fulfills the document API presented by Fetch Rewards.   Implements Docker for deployment.
+My implementation of a GO webservice program that fulfills the document API presented by Fetch Rewards (https://github.com/fetch-rewards/receipt-processor-challenge). 
 
+This project fulfills the following:
+- API development
+- Golang backend development
+- Router implementation
+- JSON encoding and processing
+- React, Typescript frontend communication
+- Docker & Docker Compose deployment
 ---
 
 ## Run Using Docker

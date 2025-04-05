@@ -28,6 +28,7 @@ git clone https://github.com/cardenasc33/receipt-processor-challenge.git
 ```
 
 2. Build and start the container with docker compose:
+   
 Within the root directory `receipt-processor-challenge`, run the following: 
 ```bash
 docker compose up --build

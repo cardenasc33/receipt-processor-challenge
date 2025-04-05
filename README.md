@@ -1,6 +1,6 @@
 # Receipt Processor
 
-Implemented By Christian Cardenas
+Implemented by Christian Cardenas
 
 My implementation of a GO webservice program that fulfills the document API presented by Fetch Rewards (https://github.com/fetch-rewards/receipt-processor-challenge). 
 

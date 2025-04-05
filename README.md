@@ -8,6 +8,7 @@ This project fulfills the following:
 - API development
 - Golang backend development
 - Router implementation
+- Data Modeling
 - JSON encoding and processing
 - React, Typescript frontend communication
 - Docker & Docker Compose deployment

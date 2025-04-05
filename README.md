@@ -73,7 +73,7 @@ NOTE:  The JSON data should include retailer name, an item name & price, purchas
 ![receipt-POST](https://github.com/user-attachments/assets/6c9c37c3-680a-4bd6-9a77-64edf59080ac)
 
 
-Once you submit the request, you should see a JSON response body with a uniquely generated receipt ID.  This ID can then be used for the `GET` endpoint.  
+Once you submit the request, you should see a JSON response body with a uniquely generated receipt ID.  This ID can then be used for the `GET` request.  
  
 ## Testing GET Endpoint
 1. Set the request to `GET` within Postman.

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { isConstructorDeclaration } from 'typescript';
 import './App.css'; // Import the CSS file for styling
 import Modal from './Modal'; 
 import './Modal.css'; 
+
 
 interface Item {
   Description: string;
@@ -25,7 +27,12 @@ const App: React.FC = () => {
   // Modal used to show submission of receipt
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
+  const openModal = () => {
+  
+    setIsModalOpen(true);
+    getReceipt();
+
+  }
   const closeModal = () => {
     // Clear form after submission
     setRetailer('');
@@ -69,7 +76,7 @@ const App: React.FC = () => {
       return;
     }
   
-
+    // POST Endpoint:
     try {
 
       const response = await fetch(`${backendUrl}/receipts/process`, {
@@ -88,17 +95,41 @@ const App: React.FC = () => {
       console.log('Receipt Submitted:', responseData);
 
       setReceiptID(responseData.ReceiptID)
-      setPoints(responseData.Points)
       openModal() 
-
-   
-      
     } catch (error) {
       console.error('Error submitting receipt:', error);
       alert('Error submitting receipt. Please try again later.');
     }
   };
 
+  const getReceipt = async () => {
+
+    // GET Endpoint:
+    try {
+
+      console.log("GET Receipt: ", receiptID)
+      const response = await fetch(`${backendUrl}/receipts/${receiptID}/points`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to retrieve receipt');
+      }
+
+      const responseData = await response.json();
+      console.log('Receipt Retrieved:', responseData);
+
+      setPoints(responseData.Points)
+   
+
+    } catch (error) {
+      console.error('Error retrieving receipt:', error);
+      alert('Error retrieving receipt. Please try again later.');
+    }
+  }
 
   return (
     <div className="form-container">

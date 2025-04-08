@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { isConstructorDeclaration } from 'typescript';
 import './App.css'; // Import the CSS file for styling
 import Modal from './Modal'; 
 import './Modal.css'; 
+import ConfettiComponent from './ConfettiComponent';
 
 
 interface Item {
@@ -23,16 +24,35 @@ const App: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [receiptID, setReceiptID] = useState('')
   const [points, setPoints] = useState('')
+  const [runConfetti, setRunConfetti] = useState(false);
 
+ const width = window.innerWidth;
+ const height = window.innerHeight;
+
+ const showConfetti = () => {
+   setRunConfetti(true);
+
+   setTimeout(() => {
+     setRunConfetti(false);
+   }, 6000); 
+ };
+  
   // Modal used to show submission of receipt
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
-  
     setIsModalOpen(true);
-    getReceipt();
-
+    showConfetti();
   }
+
+  useEffect (() => {
+    if (receiptID != "") {
+      getReceipt()
+      openModal()
+    }
+  }, [receiptID])
+
+
   const closeModal = () => {
     // Clear form after submission
     setRetailer('');
@@ -76,10 +96,10 @@ const App: React.FC = () => {
       return;
     }
   
-    // POST Endpoint:
     try {
 
-      const response = await fetch(`${backendUrl}/receipts/process`, {
+      // POST Endpoint:
+      const postResponse = await fetch(`${backendUrl}/receipts/process`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,15 +107,16 @@ const App: React.FC = () => {
         body: JSON.stringify(data)
       });
 
-      if (!response.ok) {
+      if (!postResponse.ok) {
         throw new Error('Failed to submit receipt');
       }
 
-      const responseData = await response.json();
-      console.log('Receipt Submitted:', responseData);
+      const postData = await postResponse.json();
+      console.log('Receipt Submitted:', postData);
 
-      setReceiptID(responseData.ReceiptID)
-      openModal() 
+      setReceiptID(postData.ReceiptID)
+
+      getReceipt()
     } catch (error) {
       console.error('Error submitting receipt:', error);
       alert('Error submitting receipt. Please try again later.');
@@ -103,33 +124,23 @@ const App: React.FC = () => {
   };
 
   const getReceipt = async () => {
-
     // GET Endpoint:
-    try {
+    console.log(receiptID)
 
-      console.log("GET Receipt: ", receiptID)
-      const response = await fetch(`${backendUrl}/receipts/${receiptID}/points`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to retrieve receipt');
+    const getResponse = await fetch(`${backendUrl}/receipts/${receiptID}/points`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
       }
+    });
 
-      const responseData = await response.json();
-      console.log('Receipt Retrieved:', responseData);
+    const getData = await getResponse.json();
+    console.log('Receipt Retrieved:', getData);
 
-      setPoints(responseData.Points)
-   
-
-    } catch (error) {
-      console.error('Error retrieving receipt:', error);
-      alert('Error retrieving receipt. Please try again later.');
-    }
+    setPoints(getData.Points)
   }
+
+  
 
   return (
     <div className="form-container">
@@ -213,14 +224,23 @@ const App: React.FC = () => {
       <button type="button" onClick={handleSubmitReceipt} className="btn-submit-receipt">
         Submit Receipt
       </button>
+      
+      {/* Render the ConfettiComponent */}
+      <ConfettiComponent
+        width={width}
+        height={height}
+        runConfetti={runConfetti}
+        gravity={1}  // Optional: Change gravity for a different effect
+        numberOfPieces={175}  // Optional: More confetti pieces for bigger explosion
+      />
 
       <div>
-      <Modal isOpen={isModalOpen} onClose={closeModal} title="Receipt Submitted!">
-        <p>{"\nRetailer: " + retailer}</p>
-        <p>{"\nReceipt ID: " + receiptID}</p>
-        <p>{"\nPoints: " + points }</p>
-      </Modal>
-    </div>
+        <Modal isOpen={isModalOpen} onClose={closeModal} title="Receipt Submitted!">
+          <p>{"\nRetailer: " + retailer}</p>
+          <p>{"\nReceipt ID: " + receiptID}</p>
+          <p>{"\nPoints: " + points }</p>
+        </Modal>
+      </div>
 
 
     </div>

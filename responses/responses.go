@@ -15,10 +15,8 @@ type ReceiptIdParams struct {
 
 // Reward Points Response:
 // Outlines sucessful response from the server 
-// containing the status code and awarded points as a response
+// containing the awarded points as a response
 type AwardPointsResponse struct {
-	// Success Code, Usually 200
-	StatusCode int 
 
 	// Points awarded for receipt 
 	Points int64

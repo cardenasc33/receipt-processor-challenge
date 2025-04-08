@@ -86,7 +86,6 @@ func ProcessReceipts(res http.ResponseWriter, req *http.Request) {
 	var response = responses.AwardPointsResponse{
 		ReceiptID: receiptStruct.Id,
 		Points: int64(receiptStruct.Points),
-		StatusCode: http.StatusOK,
 	}
 
 	fmt.Println("Receipt ID: " , response.ReceiptID)

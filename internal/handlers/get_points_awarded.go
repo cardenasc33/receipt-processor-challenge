@@ -49,7 +49,6 @@ func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 	var response = responses.AwardPointsResponse{
 		ReceiptID: receiptPointsById.Id,
 		Points: int64(receiptPointsById.Points),
-		StatusCode: http.StatusOK,
 	}
 
 	// Write the response struct to the response writer

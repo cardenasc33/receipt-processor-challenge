@@ -43,7 +43,8 @@ func main(){
 	// Start server
 	// @params: (base location of server, handler that MUX type satisfies)
 	socket := hostname + ":" + port
-	fmt.Println("Serving on ", socket)
+	fmt.Println("Now running and serving on ", socket)
+	fmt.Println("Check README.md file for backend and frontend testing and usage")
 	err := http.ListenAndServe(socket, r)
 	if err != nil {
 		log.Error(err)  // log any errors when starting the server

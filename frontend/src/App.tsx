@@ -44,7 +44,7 @@ const App: React.FC = () => {
   }
 
   useEffect (() => {
-    if (receiptID != "") {
+    if (receiptID !== '') {
       getReceipt()
       openModal()
     }
@@ -112,8 +112,6 @@ const App: React.FC = () => {
       console.log('Receipt Submitted:', postData);
 
       setReceiptID(postData.ReceiptID)
-
-      getReceipt()
     } catch (error) {
       console.error('Error submitting receipt:', error);
       alert('Error submitting receipt. Please try again later.');

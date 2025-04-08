@@ -4,8 +4,6 @@ import (
 	
 )
 
-// Define types of data the database will return
-
 type Item struct {
 	Description string
 	Price       string
@@ -23,7 +21,6 @@ type Receipt struct {
 
 }
 
-// Database collections
 type ReceiptDetails struct {
 	ReceiptID string
 	Points int64

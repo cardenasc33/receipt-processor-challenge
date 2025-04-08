@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { isConstructorDeclaration } from 'typescript';
 import './App.css'; // Import the CSS file for styling
 import Modal from './Modal'; 
 import './Modal.css'; 
@@ -37,7 +36,6 @@ const App: React.FC = () => {
    }, 6000); 
  };
   
-  // Modal used to show submission of receipt
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -54,7 +52,6 @@ const App: React.FC = () => {
 
 
   const closeModal = () => {
-    // Clear form after submission
     setRetailer('');
     setPurchaseDate('');
     setPurchaseTime('');
@@ -225,13 +222,12 @@ const App: React.FC = () => {
         Submit Receipt
       </button>
       
-      {/* Render the ConfettiComponent */}
       <ConfettiComponent
         width={width}
         height={height}
         runConfetti={runConfetti}
-        gravity={1}  // Optional: Change gravity for a different effect
-        numberOfPieces={175}  // Optional: More confetti pieces for bigger explosion
+        gravity={1}  
+        numberOfPieces={175}
       />
 
       <div>

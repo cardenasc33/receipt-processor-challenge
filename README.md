@@ -93,7 +93,7 @@ In the root directory `receipt-processor-challenge`, enter the command
 ```bash
 go test -v ./...
 ```
-This will recursively run ALL the test files in verbose mode `-v` within the project.
+This will recursively run ALL the test files in verbose mode `-v` within the project indicating what tests were ran and whether they passed or failed. 
 
 
 ## Summary of API Specification

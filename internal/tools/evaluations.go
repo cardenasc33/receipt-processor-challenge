@@ -30,7 +30,6 @@ import (
 func IsPostDataValid (receipt Receipt) error {
 	//reflect.ValueOf(receipt) returns a reflect.Value representing the run-time data of interface, receipt.
 	receiptValues := reflect.ValueOf(receipt) // e.g. Pepsi, 1.25
-	fmt.Println("Receipt Values: ", receiptValues)
 	t := receiptValues.Type()  // t = tools.Receipt (Receipt struct types)
 
 	for i := 0; i < receiptValues.NumField(); i++ { // NumField = number of fields of receipt struct
@@ -94,12 +93,9 @@ func DescriptionLengthReward(receipt Receipt) int {
 	// trim the length of the item description
 	for _, item := range items {
 		trimmedDescription := strings.Trim(item.Description, " ")
-		fmt.Println("Trimmed Description: ", trimmedDescription)
 		trimmedLength := len(trimmedDescription)
-		fmt.Println("Trimmed Length: ", trimmedLength)
 		if math.Mod(float64(trimmedLength), 3) == 0 {
 			// first convert price from string to float 64
-			fmt.Println("Item Price: ", item.Price)
 			itemPrice, err := strconv.ParseFloat(item.Price, 64)
 			if err != nil {
 				fmt.Println("Error converting string to float:", err)
@@ -135,13 +131,11 @@ func AddAllPoints(receipt Receipt) (int, error) {
 	}
 	
 	// Rule 4: 5 points for every two items on the receipt.
-	fmt.Println("Number of Items: ", CountNumItems(receipt))
 	totalPoints += (CountNumItems(receipt) / 2) * 5
 
 	// Rule 5: 	If the trimmed length of the item description is a multiple of 3, 
 	// 			multiply the price by 0.2 and round up to the nearest integer. 
 	//			The result is the number of points earned.
-	fmt.Println("Description Reward: " , DescriptionLengthReward(receipt))
 	totalPoints += DescriptionLengthReward(receipt)
 	
 	// Rule 6: 6 points if the day in the purchase date is odd.
@@ -154,7 +148,6 @@ func AddAllPoints(receipt Receipt) (int, error) {
 	purchaseDay := purchaseDate.Day()
 	// % can be used here instead of math.Mod since I'm calculating mod of ints
 	if purchaseDay % 2 == 0 {
-		fmt.Printf("Purchase DAY: ", purchaseDay)
 		totalPoints += 0 // Even date, no additional points
 	} else {
 		// Odd date, award an additional 6 points
@@ -167,10 +160,9 @@ func AddAllPoints(receipt Receipt) (int, error) {
 	layout := "15:04" //15:04 format for military time
 	parsedTime, err := time.Parse(layout, receipt.PurchaseTime)  // time.Parse(layout, time string to parse)
 	if err != nil {
-		log.Println("Error parsing time: \"%v\" %v \n", receipt.PurchaseTime, err)
+		log.Printf("Error parsing time: \"%v\" %v \n", receipt.PurchaseTime, err)
 		return -1, errors.New("Error in parsing time")
 	}
-	fmt.Println("Parsed Time:", parsedTime)
 
 	// Checks to see if time in current param is within start and end times
 	startTime, _ := time.Parse("15:04:05", "14:00:00") // 14:00:00 = 2:00pm

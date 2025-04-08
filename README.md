@@ -11,6 +11,7 @@ This project fulfills the following:
 - Data Modeling
 - Point Distribution Logic 
 - JSON encoding and processing
+- Testing
 - Error logging & handling
 - React, Typescript frontend communication
 - Docker & Docker Compose deployment

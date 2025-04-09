@@ -37,7 +37,7 @@ Within the root directory `receipt-processor-challenge`, run the following:
 docker compose up -d --build
 ```
 
-This will create and run docker containers from the frontend and backend images in detached mode so that they run in the background.
+This will create and run docker containers from the frontend and backend images. The `-d` flag specifies detached mode which runs the containers in the background.
 
 The Go backend server should now be listening for API requests on port `8080`
 

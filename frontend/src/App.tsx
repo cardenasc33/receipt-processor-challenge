@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import './App.css'; // Import the CSS file for styling
-import Modal from './Modal'; 
-import './Modal.css'; 
+import './App.css';
+import Modal from './Modal';
+import './Modal.css';
 import ConfettiComponent from './ConfettiComponent';
-
 
 interface Item {
   Description: string;
   Price: string;
 }
-const hostIp = process.env.DOCKER_HOST_IP || '127.0.0.1'; // Default to localhost if no env variable is set
-const port = process.env.PORT || 8080; // Use the environment variable or default to 8080
-const backendUrl = `http://${hostIp}:${port}`;
 
+interface PostResponse {
+  ReceiptID: string;
+}
+
+interface GetPointsResponse {
+  Points: string;
+}
+
+const hostIp = process.env.DOCKER_HOST_IP || '127.0.0.1';
+const port = process.env.PORT || '8080'; // Ensure it's a string
+const backendUrl = `http://${hostIp}:${port}`;
 
 const App: React.FC = () => {
   const [itemName, setItemName] = useState('');
@@ -21,35 +28,37 @@ const App: React.FC = () => {
   const [purchaseDate, setPurchaseDate] = useState('');
   const [purchaseTime, setPurchaseTime] = useState('');
   const [items, setItems] = useState<Item[]>([]);
-  const [receiptID, setReceiptID] = useState('')
-  const [points, setPoints] = useState('')
+  const [receiptID, setReceiptID] = useState('');
+  const [points, setPoints] = useState('');
   const [runConfetti, setRunConfetti] = useState(false);
-
- const width = window.innerWidth;
- const height = window.innerHeight;
-
- const showConfetti = () => {
-   setRunConfetti(true);
-
-   setTimeout(() => {
-     setRunConfetti(false);
-   }, 6000); 
- };
-  
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }, []);
+
+  const showConfetti = () => {
+    setRunConfetti(true);
+    setTimeout(() => {
+      setRunConfetti(false);
+    }, 6000);
+  };
+
+  useEffect(() => {
+    if (receiptID !== '') {
+      getReceipt();
+      openModal();
+    }
+  }, [receiptID]);
 
   const openModal = () => {
     setIsModalOpen(true);
     showConfetti();
-  }
-
-  useEffect (() => {
-    if (receiptID !== '') {
-      getReceipt()
-      openModal()
-    }
-  }, [receiptID])
-
+  };
 
   const closeModal = () => {
     setRetailer('');
@@ -57,24 +66,14 @@ const App: React.FC = () => {
     setPurchaseTime('');
     setItems([]);
     setIsModalOpen(false);
-  }
-  
+  };
 
   const totalPrice = items.reduce((total, item) => total + parseFloat(item.Price), 0);
-
-
-  const data = {
-    retailer: retailer,
-    purchaseDate: purchaseDate,
-    purchaseTime: purchaseTime,
-    total: totalPrice.toFixed(2),
-    items: items,
-  };
 
   const handleAddItem = () => {
     const price = parseFloat(itemPrice);
     if (itemName && !isNaN(price) && price > 0) {
-      const newItem = { Description: itemName, Price: price.toString() };
+      const newItem: Item = { Description: itemName, Price: price.toString() };
       setItems((prevItems) => [...prevItems, newItem]);
       setItemName('');
       setItemPrice('');
@@ -88,54 +87,65 @@ const App: React.FC = () => {
       alert('Please fill in all the receipt details (Retailer, Date, Time).');
       return;
     }
+
     if (items.length === 0) {
       alert('Please add at least one item to the receipt.');
       return;
     }
-  
-    try {
 
-      // POST Endpoint:
+    const data = {
+      retailer,
+      purchaseDate,
+      purchaseTime,
+      total: totalPrice.toFixed(2),
+      items,
+    };
+
+    // POST Request
+    try {
       const postResponse = await fetch(`${backendUrl}/receipts/process`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
 
       if (!postResponse.ok) {
         throw new Error('Failed to submit receipt');
       }
 
-      const postData = await postResponse.json();
+      const postData: PostResponse = await postResponse.json();
       console.log('Receipt Submitted:', postData);
-
-      setReceiptID(postData.ReceiptID)
+      setReceiptID(postData.ReceiptID);
     } catch (error) {
       console.error('Error submitting receipt:', error);
       alert('Error submitting receipt. Please try again later.');
     }
   };
 
+  // GET Request
   const getReceipt = async () => {
-    // GET Endpoint:
-    console.log(receiptID)
+    try {
+      const getResponse = await fetch(`${backendUrl}/receipts/${receiptID}/points`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-    const getResponse = await fetch(`${backendUrl}/receipts/${receiptID}/points`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
+      if (!getResponse.ok) {
+        throw new Error('Failed to retrieve receipt');
       }
-    });
 
-    const getData = await getResponse.json();
-    console.log('Receipt Retrieved:', getData);
-
-    setPoints(getData.Points)
-  }
-
-  
+      const getData: GetPointsResponse = await getResponse.json();
+      console.log('Receipt Retrieved:', getData);
+      setPoints(getData.Points);
+    } catch (error) {
+      console.error('Error retrieving receipt:', error);
+      alert('Error retrieving receipt points.');
+    }
+  };
 
   return (
     <div className="form-container">
@@ -219,24 +229,20 @@ const App: React.FC = () => {
       <button type="button" onClick={handleSubmitReceipt} className="btn-submit-receipt">
         Submit Receipt
       </button>
-      
+
       <ConfettiComponent
-        width={width}
-        height={height}
+        width={dimensions.width}
+        height={dimensions.height}
         runConfetti={runConfetti}
-        gravity={1}  
+        gravity={1}
         numberOfPieces={175}
       />
 
-      <div>
-        <Modal isOpen={isModalOpen} onClose={closeModal} title="Receipt Submitted!">
-          <p>{"\nRetailer: " + retailer}</p>
-          <p>{"\nReceipt ID: " + receiptID}</p>
-          <p>{"\nPoints: " + points }</p>
-        </Modal>
-      </div>
-
-
+      <Modal isOpen={isModalOpen} onClose={closeModal} title="Receipt Submitted!">
+        <p>{"\nRetailer: " + retailer}</p>
+        <p>{"\nReceipt ID: " + receiptID}</p>
+        <p>{"\nPoints: " + points}</p>
+      </Modal>
     </div>
   );
 };

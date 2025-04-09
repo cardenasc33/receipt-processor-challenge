@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"receipt-processor-challenge/responses"
+
 	"github.com/go-chi/chi"
 	log "github.com/sirupsen/logrus"
 )
@@ -17,8 +18,7 @@ import (
 	Example Response:
 
 	{ "points": 32 }
-*/ 
-
+*/
 
 // Get the points awarded for receipt with provided id in http request
 func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {

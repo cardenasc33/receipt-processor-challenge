@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"receipt-processor-challenge/responses"
 	"github.com/go-chi/chi"
@@ -27,7 +26,6 @@ func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 	// Get the URL parameter entered for {id} in 
 	// http://localhost:8080/receipts/{id}/points
 	var idParam = chi.URLParam(req, "id")
-	fmt.Println("ID Parameter: ", idParam)
 
 	// Set the ReceiptIdParams struct ReceiptID field to the id parameter entered from the URL
 	var params = responses.ReceiptIdParams{}
@@ -36,7 +34,6 @@ func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 
 	var err error
 
-	// // TODO complete response with Receipt Struct
 	receiptPointsById, ok := inMemoryReceiptMap[params.ReceiptID]
 	if !ok {
 		log.Printf("[ getReceiptPoints: receipt does not exist in in-memory map with id \"%s\" ] \n", params.ReceiptID)

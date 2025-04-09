@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"io" // Reads request body
 	"net/http"
 
@@ -60,12 +59,6 @@ func ProcessReceipts(res http.ResponseWriter, req *http.Request) {
 
 	receiptID := uuid.New().String()
 
-	fmt.Println("UUID: ", receiptID)
-	fmt.Println("Retailer: ", receiptStruct.Retailer)
-	fmt.Println("Total: ", receiptStruct.Total)
-
-	// TODO
-	// Define Receipt Points
 	// Add all points rewarded given rules above
 	receiptPoints, err := tools.AddAllPoints(receiptStruct)
 	if err != nil {
@@ -78,8 +71,6 @@ func ProcessReceipts(res http.ResponseWriter, req *http.Request) {
 	receiptStruct.Id = receiptID
 	receiptStruct.Points = receiptPoints
 	inMemoryReceiptMap[receiptID] = receiptStruct
-	fmt.Println("Key: ", receiptID)
-	fmt.Println("Processed Location: ", inMemoryReceiptMap[receiptID])
 
 	
 	// Set value to the response struct
@@ -87,8 +78,6 @@ func ProcessReceipts(res http.ResponseWriter, req *http.Request) {
 		ReceiptID: receiptStruct.Id,
 		Points: int64(receiptStruct.Points),
 	}
-
-	fmt.Println("Receipt ID: " , response.ReceiptID)
 
 	// Write the response struct to the response writer
 	res.Header().Set("Content-Type", "application/json")

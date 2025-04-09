@@ -1,9 +1,5 @@
 package handlers
 
-import (
-	
-)
-
 type Item struct {
 	Description string
 	Price       string
@@ -16,13 +12,13 @@ type Receipt struct {
 	PurchaseTime string
 	Items        []Item
 	Total        string
-	id           string `json:"id,omitempty"` // instructs encoding/json package to omit the field from the JSON output if it's "empty"
-	points       int `json:"points,omitempty"` 
+	Id           string`json:"id,omitempty"`  // instructs encoding/json package to omit the field from the JSON output if it's "empty"
+	Points       int `json:"points,omitempty"` 
 
 }
 
 type ReceiptDetails struct {
-	id string
-	points int64
+	Id string
+	Points int64
 }
 

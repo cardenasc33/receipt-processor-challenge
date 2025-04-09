@@ -28,22 +28,22 @@ func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 
 	// Set the ReceiptIdParams struct ReceiptID field to the id parameter entered from the URL
 	var params = ReceiptIdParams{}
-	params.id = idParam
+	params.Id = idParam
 
 
 	var err error
 
-	receiptPointsById, ok := inMemoryReceiptMap[params.id]
+	receiptPointsById, ok := inMemoryReceiptMap[params.Id]
 	if !ok {
-		log.Printf("[ getReceiptPoints: receipt does not exist in in-memory map with id \"%s\" ] \n", params.id)
-		res.Header().Set("x-receipt-not-exist", params.id)
+		log.Printf("[ getReceiptPoints: receipt does not exist in in-memory map with id \"%s\" ] \n", params.Id)
+		res.Header().Set("x-receipt-not-exist", params.Id)
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Set value to the response struct
 	var response = GetResponse{
-		Points: int64(receiptPointsById.points),
+		Points: int64(receiptPointsById.Points),
 	}
 
 	// Write the response struct to the response writer

@@ -69,13 +69,13 @@ func ProcessReceipts(res http.ResponseWriter, req *http.Request) {
 	}
 
 	// store the points for this receipt along with the id of the receipt in memory
-	receiptStruct.id = receiptID
-	receiptStruct.points = receiptPoints
+	receiptStruct.Id = receiptID
+	receiptStruct.Points = receiptPoints
 	inMemoryReceiptMap[receiptID] = receiptStruct
 
 	// Set value to the response struct
 	var response = PostResponse{
-		Id: inMemoryReceiptMap[receiptID].id,
+		Id: inMemoryReceiptMap[receiptID].Id,
 	}
 
 	// Set the header fothe response writer

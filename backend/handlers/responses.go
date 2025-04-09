@@ -11,7 +11,7 @@ import (
 // Receipt ID Params Struct:
 // Represents parameters that the API endpoint will take
 type ReceiptIdParams struct {
-	id string 
+	Id string 
 }
 
 // PostResponse:

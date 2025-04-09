@@ -1,4 +1,4 @@
-package tools
+package handlers
 
 import (
 	
@@ -16,13 +16,13 @@ type Receipt struct {
 	PurchaseTime string
 	Items        []Item
 	Total        string
-	Id           string `json:"id,omitempty"` // instructs encoding/json package to omit the field from the JSON output if it's "empty"
-	Points       int `json:"points,omitempty"` 
+	id           string `json:"id,omitempty"` // instructs encoding/json package to omit the field from the JSON output if it's "empty"
+	points       int `json:"points,omitempty"` 
 
 }
 
 type ReceiptDetails struct {
-	ReceiptID string
-	Points int64
+	id string
+	points int64
 }
 

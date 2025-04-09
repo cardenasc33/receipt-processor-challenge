@@ -3,7 +3,6 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-	"receipt-processor-challenge/responses"
 
 	"github.com/go-chi/chi"
 	log "github.com/sirupsen/logrus"
@@ -28,24 +27,23 @@ func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 	var idParam = chi.URLParam(req, "id")
 
 	// Set the ReceiptIdParams struct ReceiptID field to the id parameter entered from the URL
-	var params = responses.ReceiptIdParams{}
-	params.ReceiptID = idParam
+	var params = ReceiptIdParams{}
+	params.id = idParam
 
 
 	var err error
 
-	receiptPointsById, ok := inMemoryReceiptMap[params.ReceiptID]
+	receiptPointsById, ok := inMemoryReceiptMap[params.id]
 	if !ok {
-		log.Printf("[ getReceiptPoints: receipt does not exist in in-memory map with id \"%s\" ] \n", params.ReceiptID)
-		res.Header().Set("x-receipt-not-exist", params.ReceiptID)
+		log.Printf("[ getReceiptPoints: receipt does not exist in in-memory map with id \"%s\" ] \n", params.id)
+		res.Header().Set("x-receipt-not-exist", params.id)
 		res.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// Set value to the response struct
-	var response = responses.AwardPointsResponse{
-		ReceiptID: receiptPointsById.Id,
-		Points: int64(receiptPointsById.Points),
+	var response = GetResponse{
+		Points: int64(receiptPointsById.points),
 	}
 
 	// Write the response struct to the response writer
@@ -53,7 +51,7 @@ func GetPointsAwarded(res http.ResponseWriter, req *http.Request) {
 	err = json.NewEncoder(res).Encode(response)
 	if err != nil {
 		log.Error(err)
-		responses.InternalErrorHandler(res)
+		InternalErrorHandler(res)
 		return
 	}
 }

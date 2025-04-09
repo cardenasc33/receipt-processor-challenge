@@ -1,4 +1,4 @@
-package tools
+package handlers
 
 import (
 	"fmt"
@@ -34,7 +34,7 @@ func IsPostDataValid (receipt Receipt) error {
 	for i := 0; i < receiptValues.NumField(); i++ { // NumField = number of fields of receipt struct
 		// Get the values from the receipt. 
 	 	values := fmt.Sprintf("%v", receiptValues.Field(i)) // Sprintf formats and returns a string without printing it. 
-		if len(values) == 0 && (t.Field(i).Name != "Id" && t.Field(i).Name != "Points") {
+		if len(values) == 0 && (t.Field(i).Name != "id" && t.Field(i).Name != "points") {
 			// this attribute is not present, not valid
 			return errors.New(t.Field(i).Name)
 		}

@@ -10,11 +10,11 @@ interface Item {
 }
 
 interface PostResponse {
-  ReceiptID: string;
+  id: string;
 }
 
 interface GetPointsResponse {
-  Points: string;
+  points: string;
 }
 
 const hostIp = process.env.DOCKER_HOST_IP || '127.0.0.1';
@@ -33,6 +33,7 @@ const App: React.FC = () => {
   const [runConfetti, setRunConfetti] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const totalPrice = items.reduce((total, item) => total + parseFloat(item.Price), 0);
 
   useEffect(() => {
     setDimensions({
@@ -68,7 +69,6 @@ const App: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const totalPrice = items.reduce((total, item) => total + parseFloat(item.Price), 0);
 
   const handleAddItem = () => {
     const price = parseFloat(itemPrice);
@@ -117,7 +117,7 @@ const App: React.FC = () => {
 
       const postData: PostResponse = await postResponse.json();
       console.log('Receipt Submitted:', postData);
-      setReceiptID(postData.ReceiptID);
+      setReceiptID(postData.id);
     } catch (error) {
       console.error('Error submitting receipt:', error);
       alert('Error submitting receipt. Please try again later.');
@@ -140,7 +140,7 @@ const App: React.FC = () => {
 
       const getData: GetPointsResponse = await getResponse.json();
       console.log('Receipt Retrieved:', getData);
-      setPoints(getData.Points);
+      setPoints(getData.points);
     } catch (error) {
       console.error('Error retrieving receipt:', error);
       alert('Error retrieving receipt points.');

@@ -1,7 +1,8 @@
-package responses
+package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -10,19 +11,21 @@ import (
 // Receipt ID Params Struct:
 // Represents parameters that the API endpoint will take
 type ReceiptIdParams struct {
-	ReceiptID string 
+	id string 
 }
 
-// Reward Points Response:
-// Outlines sucessful response from the server 
-// containing the awarded points as a response
-type AwardPointsResponse struct {
-
-	// Points awarded for receipt 
-	Points int64
-
+// PostResponse:
+// Outlines sucessful POST response from the server 
+type PostResponse struct {
 	// Receipt ID
-	ReceiptID string
+	Id string `json:"id"`
+}
+
+// GetResponse:
+// Outlines sucessful GET response from the server 
+type GetResponse struct {
+	// Points awarded for receipt 
+	Points int64 `json:"points"`
 }
 
 // Error Response Struct:
@@ -48,6 +51,8 @@ func writeError(w http.ResponseWriter, message string, code int) {
 	w.WriteHeader(code)
 
 	json.NewEncoder(w).Encode(resp)
+
+	fmt.Println("resp writer: ", resp)
 }
 
 // Wrapper to provide different types of error responses

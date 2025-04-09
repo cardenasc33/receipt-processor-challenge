@@ -29,8 +29,7 @@ func Handler (r *chi.Mux) {
 	//strip it from the path and continue routing through the mux, if a route matches, then it will serve the handler.
 	r.Use(chimiddle.StripSlashes)
 
-	// GET Endpoint: Get Points
-	// Looks up the receipt by the ID and returns an object specifying the points awarded.
+	// Defined Endpoints
 	r.Route("/receipts", func(router chi.Router) {
 		router.Post("/process", ProcessReceipts)
 

@@ -38,6 +38,7 @@ docker compose up -d --build
 ```
 
 This will create and run docker containers from the frontend and backend images in detached mode so that they run in the background.
+
 The Go backend server should now be listening for API requests on port `8080`
 
 The frontend UI should also be available to use with `localhost:3001`.

@@ -4,7 +4,7 @@ Implemented by Christian Cardenas
 
 My implementation of a Go webservice program that fulfills the documented API presented by Fetch Rewards (https://github.com/fetch-rewards/receipt-processor-challenge). 
 
-This project fulfills the following:
+This project accomplishes the following:
 - API development
 - Golang backend development
 - Chi Router and HTTP server implementation

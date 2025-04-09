@@ -34,10 +34,10 @@ git clone https://github.com/cardenasc33/receipt-processor-challenge.git
    
 Within the root directory `receipt-processor-challenge`, run the following: 
 ```bash
-docker compose up --build
+docker compose up -d --build
 ```
 
-This will create and run docker containers from the frontend and backend images.
+This will create and run docker containers from the frontend and backend images in detached mode so that they run in the background.
 The Go backend server should now be listening for API requests on port `8080`
 
 The frontend UI should also be available to use with `localhost:3001`.

@@ -87,7 +87,7 @@ Once you submit the request, you should see a JSON response body with a uniquely
 If the receipt exists, you should see the points awarded in the json response body.  
 
 ## Backend Testing With Go Testing Library
-I have included several test files to test the backend's functions.  These test files are labeled as `{file-to-test}_test.go` (Example: `evaluations_test.go` to test the functions in  `evaluations.go` located at `receipt-processor-challenge/backend/handlers/evaluations.go`)
+I have included several test files to test the backend's functions.  These test files are labeled as `{file-to-test}_test.go` (Example: `evaluations_test.go` to test the functions in  `evaluations.go` located at `receipt-processor-challenge/backend/evaluations.go`)
 
 ### Running the Go Test Files
 In the root directory `receipt-processor-challenge`, enter the command 

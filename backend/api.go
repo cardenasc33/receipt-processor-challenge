@@ -1,9 +1,10 @@
-package handlers
+package backend
 
 import (
 	"net/http"
+
 	"github.com/go-chi/chi"
-	chimiddle "github.com/go-chi/chi/middleware" 
+	chimiddle "github.com/go-chi/chi/middleware"
 )
 
 // CORS (Cross-Origin Region Sharing) allows the client browser to check with the third-party servers if the request is authorized before any data transfers.

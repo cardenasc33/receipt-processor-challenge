@@ -1,4 +1,4 @@
-package handlers
+package backend
 
 type Item struct {
 	Description string

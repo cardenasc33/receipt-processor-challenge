@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"os" //  used to set hostname and port environment variables
 
-	"github.com/go-chi/chi"  //package for web dev
-	"receipt-processor-challenge/backend/handlers"  // import api handler functions
+	"receipt-processor-challenge/backend" // import api handler functions
+
+	"github.com/go-chi/chi" //package for web dev
 	log "github.com/sirupsen/logrus"
 )
 
@@ -16,7 +17,7 @@ func main(){
 
 	// Returns a pointer to a MUX type
 	var r *chi.Mux = chi.NewRouter()  //struct to set up API
-	handlers.Handler(r)	// Set up router, i.e. add endpoint definitions
+	backend.Handler(r)	// Set up router, i.e. add endpoint definitions
 
 	fmt.Println("Starting GO API service...")
 

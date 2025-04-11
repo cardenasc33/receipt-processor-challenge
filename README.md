@@ -74,7 +74,7 @@ Once you successfully submit a receipt, you will be given points and a unique re
 4. Enter the JSON data of the receipt.
 NOTE:  The JSON data should include retailer name, an item description & price, purchase date, purchase time of the item, and total.  (See `receipt-processor-challenge/examples/morning-receipt.json` file for structure and data examples)
 
-![receipt-POST](https://github.com/user-attachments/assets/31d1def9-215d-4a2d-85a5-48636b4b60ae)
+![receipt-POST-final](https://github.com/user-attachments/assets/68bc6adf-b32a-4faf-9b82-18b7b6c66bdd)
 
 
 Once you submit the request, you should see a JSON response body with a uniquely generated receipt ID.  This ID can then be used for the `GET` request.  

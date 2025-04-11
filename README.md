@@ -84,7 +84,8 @@ Once you submit the request, you should see a JSON response body with a uniquely
 
 2. Next enter the request: `http://localhost:8080/receipts/{id}/points`.  Replace `{id}` with the receipt ID you just received from the message body of the POST request. 
 
-![receipt-GET](https://github.com/user-attachments/assets/73838dba-0f23-49a3-8781-b5c6998d3c74)
+![receipt-GET-final](https://github.com/user-attachments/assets/c77854c2-b945-4285-a00d-97748c5eab0e)
+
 
 If the receipt exists, you should see the points awarded in the json response body.  
 

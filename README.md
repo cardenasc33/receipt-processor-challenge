@@ -48,7 +48,8 @@ The frontend UI should also be available to use with `localhost:3001`.
 
 You should see a form to enter receipt details as shown in the following picture: 
 
-![receipt-processor-frontend-ui](https://github.com/user-attachments/assets/95295886-0cff-48bd-a0a4-eb189dbb0d57)
+
+![receipt-processor-frontend-ui](https://github.com/user-attachments/assets/e9b80690-7c21-4759-bcc3-c0c840247b7b)
 
 
 Once you successfully submit a receipt, you will be given points and a unique receipt ID:

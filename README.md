@@ -54,7 +54,8 @@ You should see a form to enter receipt details as shown in the following picture
 
 Once you successfully submit a receipt, you will be given points and a unique receipt ID:
 
-![Receipt submission 1](https://github.com/user-attachments/assets/9184653e-132c-4b46-8a82-f45c4380847d)
+![receipt submission 2](https://github.com/user-attachments/assets/47c85bd1-e372-4832-8d30-00daab42ef4e)
+
 
 ## API Testing Using Postman
 

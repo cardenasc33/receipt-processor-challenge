@@ -26,7 +26,7 @@ This project accomplishes the following:
   - [Docker Engine](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) (For Linux)
 
 #### Installation Steps
-1. Clone the repository:
+1. Open a terminal and clone the repository:
 ```bash
 git clone https://github.com/cardenasc33/receipt-processor-challenge.git
 ```

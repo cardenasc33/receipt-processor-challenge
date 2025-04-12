@@ -101,9 +101,10 @@ go test -v ./...
 ```
 This will recursively run ALL the test files in verbose mode `-v` within the project indicating what tests were ran and whether they passed or failed. 
 
+## Frontend Testing with RTL & Jest
 
 ### Running the Frontend Tests
-In the `frontend` root folder, enter either command:
+In the `frontend` folder, enter either command:
 ```bash
 npm test
 ```

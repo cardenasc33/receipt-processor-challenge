@@ -1,4 +1,4 @@
-# Receipt Processor
+# Receipt Rewards Processor
 
 Implemented by Christian Cardenas
 

@@ -104,16 +104,12 @@ This will recursively run ALL the test files in verbose mode `-v` within the pro
 ## Frontend Testing with RTL & Jest
 
 ### Running the Frontend Tests
-In the `frontend` folder, enter either command:
+In the `frontend` folder, enter the command:
 ```bash
 npm test
 ```
-or
-```bash
-npm run test
-```
+![frontend tests](https://github.com/user-attachments/assets/1af3a72c-d7c6-4a8f-8537-6f35131ffa5a)
 
-These tests will cover rendering fields, adding items, preventing submission with missing fields, and mocking API responses for submission and displaying results.
 
 ## Summary of API Specification
 

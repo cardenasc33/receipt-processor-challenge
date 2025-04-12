@@ -8,11 +8,12 @@ This project accomplishes the following:
 - API development
 - Golang backend development
 - Chi Router and HTTP server implementation
-- Data Modeling and Mock Testing
+- Data Structure and Mock Testing
 - Point Distribution Logic 
 - JSON encoding and processing
 - Go Testing 
-- React Testing Library and Jest testing
+- React Testing Library and Jest Testing
+- Unit, Integration, and E2E Testing
 - Error logging & handling
 - React, Typescript frontend communication
 - Docker & Docker Compose deployment

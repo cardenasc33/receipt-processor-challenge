@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 import fetchMock from 'jest-fetch-mock';
 
-// 👇 MOCK react-confetti to avoid canvas crash
 jest.mock('react-confetti', () => () => <div data-testid="mock-confetti" />);
 
 beforeEach(() => {

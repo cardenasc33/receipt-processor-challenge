@@ -8,7 +8,7 @@ This project accomplishes the following:
 - API development
 - Golang backend development
 - Chi Router and HTTP server implementation
-- Data Modeling
+- Data Modeling and Mock Testing
 - Point Distribution Logic 
 - JSON encoding and processing
 - Go Testing 

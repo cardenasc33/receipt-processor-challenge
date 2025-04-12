@@ -101,6 +101,8 @@ go test -v ./...
 ```
 This will recursively run ALL the test files in verbose mode `-v` within the project indicating what tests were ran and whether they passed or failed. 
 
+![image](https://github.com/user-attachments/assets/0b83de98-136f-4e88-afbd-8249dd5e019c)
+
 ## Frontend Testing with RTL & Jest
 
 ### Running the Frontend Tests

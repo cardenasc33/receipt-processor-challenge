@@ -11,7 +11,8 @@ This project accomplishes the following:
 - Data Modeling
 - Point Distribution Logic 
 - JSON encoding and processing
-- Testing
+- Go Testing 
+- React Testing Library and Jest testing
 - Error logging & handling
 - React, Typescript frontend communication
 - Docker & Docker Compose deployment
@@ -100,6 +101,18 @@ go test -v ./...
 ```
 This will recursively run ALL the test files in verbose mode `-v` within the project indicating what tests were ran and whether they passed or failed. 
 
+
+### Running the Frontend Tests
+In the `frontend` root folder, enter either command:
+```bash
+npm test
+```
+or
+```bash
+npm run test
+```
+
+These tests will cover rendering fields, adding items, preventing submission with missing fields, and mocking API responses for submission and displaying results.
 
 ## Summary of API Specification
 

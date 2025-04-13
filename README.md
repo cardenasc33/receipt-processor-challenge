@@ -64,9 +64,9 @@ Once you successfully submit a receipt, you will be given points and a unique re
 ## API Testing Using Postman
 
 #### Requirements
-- Postman
+- Postman (either Postman Desktop or Postman Web + Agent)
   - [Postman Desktop](https://www.postman.com/downloads/) (For Windows/macOS)
-  - [Postman Web Version](https://web.postman.co/workspace/2fe918f7-271f-4945-86d8-fe88def81d0b/request/create?requestId=148eaa03-e183-4b9c-a2e2-a822ed867551)
+  - [Postman Web Version](https://web.postman.co/workspace/2fe918f7-271f-4945-86d8-fe88def81d0b/request/create?requestId=148eaa03-e183-4b9c-a2e2-a822ed867551) and [Postman Agent](https://www.postman.com/downloads/postman-agent/)
 
 ## Testing POST Endpoint
 1. Set the request to `POST` within Postman.

@@ -112,19 +112,19 @@ func TestDescriptionLengthReward(t *testing.T) {
 	}{
 		{
 			"Test without description length multiple of 3",
-			Receipt{Items: []Item{{Description: "Pepsi", Price: "2.00"}, {Description: "CocaCola", Price: "3.00"}}},
+			Receipt{Items: []Item{{ShortDescription: "Pepsi", Price: "2.00"}, {ShortDescription: "CocaCola", Price: "3.00"}}},
 			0, // Expected: 0, "Pepsi" is length of 5 (not multiple of 3) & "CocaCola" is length of 8 (not multiple of 3)
 		},
 		{
 			"Test with description length multiple of 3",
-			Receipt{Items: []Item{{Description: "CVS", Price: "2.00"}}},
+			Receipt{Items: []Item{{ShortDescription: "CVS", Price: "2.00"}}},
 			1, // Expected: 1, "CVS" is length of 3 (multiple of 3), 2.00 * 0.2 = 0.4 -> rounded up to 1
 		},
 		{
 			"Test with multiple items meeting description rule (description multiple of 3)",
 			Receipt{Items: []Item{
-				{Description: "Walgreens", Price: "10.00"}, // "Walgreens" = length 9 (multiple of 3)
-				{Description: "Target", Price: "20.00"}, // "Target" = length 6 (multiple of 3)
+				{ShortDescription: "Walgreens", Price: "10.00"}, // "Walgreens" = length 9 (multiple of 3)
+				{ShortDescription: "Target", Price: "20.00"}, // "Target" = length 6 (multiple of 3)
 			}},
 			6, // Expected: 6, 10.00 * 0.2 = 2 -> rounded up to 2, 20.00 * 0.2 = 4 -> rounded up to 4, 2 + 4 = 6 
 		},
@@ -152,9 +152,10 @@ func TestAddAllPoints(t *testing.T) {
 				Total:       "5.00", // Round dollar (50 points), Multiple of 0.25 (25 points)
 				PurchaseDate: "2025-04-08", // Even date (0 points)
 				PurchaseTime: "15:30", // 15:30 = 3:30pm which is between 2:00pm and 4:00pm (10 points)
-				Items:       []Item{{Description: "Coffee", Price: "3.00"}, {Description: "Muffin", Price: "2.00"}},
+				Items:       []Item{{ShortDescription: "Coffee", Price: "3.00"}, {ShortDescription: "Muffin", Price: "2.00"}},
 			},
-			// Points explanation:
+			// Expected: 101
+			// Points Breakdown:
 			// Rule 1: Retailer = "Starbucks" → 9 alphanumeric chars → 9 points
 			// Rule 2: Total = "5.00" → round dollar → 50 points
 			// Rule 3: Total = "5.00" → multiple of 0.25 → 25 points
@@ -162,8 +163,34 @@ func TestAddAllPoints(t *testing.T) {
 			// Rule 5: Item descriptions trimmed length (both 6 chars) → multiple of 3 for "Coffee" and "Muffin" → (3 * .2 = .6 -> rounded to 1) + (2 * .2 = .4 -> rounded to 1) = 2 points
 			// Rule 6: Date "2025-04-08" is even → 0 points
 			// Rule 7: Time 15:30 → between 2:00pm and 4:00pm → 10 points
-			9 + 50 + 25 + 5 + 2 + 0 + 10,
-		}, // Expected: 101 (9 + 50 + 25 + 5 + 2 + 0 + 10)
+			9 + 50 + 25 + 5 + 2 + 0 + 10, // Expected: 101 (9 + 50 + 25 + 5 + 2 + 0 + 10)
+		}, 
+		{ 
+			"2nd test case for valid receipt with multiple rules",
+			Receipt{
+				Retailer:    "Target",  // 9 alphanumeric (9 points)
+				Total:       "35.35", // Round dollar (50 points), Multiple of 0.25 (25 points)
+				PurchaseDate: "2022-01-01", // Even date (0 points)
+				PurchaseTime: "13:01", // 15:30 = 3:30pm which is between 2:00pm and 4:00pm (10 points)
+				Items:       []Item{{ShortDescription: "Mountain Dew 12PK", Price: "6.49"}, 
+							{ShortDescription: "Emils Cheese Pizza", Price: "12.25"}, 
+							{ShortDescription: "Knorr Creamy Chicken", Price: "1.26"},
+							{ShortDescription: "Doritos Nacho Cheese", Price: "3.35"},
+							{ShortDescription: "   Klarbrunn 12-PK 12 FL OZ  ", Price: "12.00"}},
+			},
+			// Expected: 28
+			// Breakdown:
+			// 	 6 points - retailer name has 6 characters
+			// 	10 points - 5 items (2 pairs @ 5 points each)
+			// 	 3 Points - "Emils Cheese Pizza" is 18 characters (a multiple of 3)
+			// 				item price of 12.25 * 0.2 = 2.45, rounded up is 3 points
+			// 	 3 Points - "Klarbrunn 12-PK 12 FL OZ" is 24 characters (a multiple of 3)
+			// 				item price of 12.00 * 0.2 = 2.4, rounded up is 3 points
+			// 	 6 points - purchase day is odd
+			//   + ---------
+			//   = 28 points
+			6 + 10 + 3 + 3 + 6, // Expected: 28 (6 + 10 + 3 + 3 + 6)
+		},
 	}
 
 	for _, test := range tests {
@@ -184,12 +211,12 @@ func TestIsPostDataValid(t *testing.T) {
 	}{
 		{
 			"Valid receipt",
-			Receipt{Retailer: "Pepsi", Total: "15.00", PurchaseDate: "2025-04-08", PurchaseTime: "15:30", Items: []Item{{Description: "Pepsi", Price: "2.00"}}},
+			Receipt{Retailer: "Pepsi", Total: "15.00", PurchaseDate: "2025-04-08", PurchaseTime: "15:30", Items: []Item{{ShortDescription: "Pepsi", Price: "2.00"}}},
 			nil,
 		},
 		{
 			"Invalid receipt with empty retailer",
-			Receipt{Retailer: "", Total: "15.00", PurchaseDate: "2025-04-08", PurchaseTime: "15:30", Items: []Item{{Description: "Pepsi", Price: "2.00"}}},
+			Receipt{Retailer: "", Total: "15.00", PurchaseDate: "2025-04-08", PurchaseTime: "15:30", Items: []Item{{ShortDescription: "Pepsi", Price: "2.00"}}},
 			assert.AnError,
 		},
 	}

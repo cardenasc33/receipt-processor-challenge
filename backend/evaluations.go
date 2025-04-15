@@ -43,7 +43,7 @@ func IsPostDataValid (receipt Receipt) error {
 	return nil
 }
 
-// Counts and returns the total number of alphanumeric characters in the retailer name. 
+// Rule 1: Counts and returns the total number of alphanumeric characters in the retailer name. 
 // Iterates through each rune in string and uses unicode.IsLetter and unicode.IsDigit to check if it's a letter or digit
 func CountAlphanumericCharacters(retailer string) int {
 	count := 0
@@ -55,13 +55,19 @@ func CountAlphanumericCharacters(retailer string) int {
 	return count
 }
 
-// Returns the cents value from the receipt total as string
+// Returns the cents portion from the receipt total as string
 func GetCentValue(total string) string {
-	cents := string(total[len(total)-2:])
-	return cents
+	if !strings.Contains(total, ".") {
+		return "00"
+	}
+	parts := strings.Split(total, ".")
+	if len(parts) != 2 || len(parts[1]) < 2 {
+		return "00"
+	}
+	return parts[1][:2]
 }
 
-// Returns the boolean value if the total from the receipt is a multiple of given number
+// Rule 3: Returns the boolean value if the total from the receipt is a multiple of given number
 func IsMultiple(total string, multiple float64) bool {
 	//Convert string to float64 to proceed with modulus operation
 	floatVal, err := strconv.ParseFloat(total, 64)
@@ -77,99 +83,94 @@ func IsMultiple(total string, multiple float64) bool {
 	return false
 }
 
-// Returns the number of items within a given receipt 
+// Rule 4: Returns the number of items within a given receipt 
 func CountNumItems(receipt Receipt) int {
-	totalItems := len(receipt.Items)
-
-	return totalItems
+	return len(receipt.Items)
 }
 
-// If the trimmed length of the item description is a multiple of 3, 
+// Rule 5: Bonus if the trimmed length of the item description is a multiple of 3, 
 // multiply the price by 0.2 and round up to the nearest integer. 
 // The result is the number of points earned.
 func DescriptionLengthReward(receipt Receipt) int {
 	pointsAdded := 0
-	items := receipt.Items
 	// trim the length of the item description
-	for _, item := range items {
-		trimmedDescription := strings.Trim(item.Description, " ")
-		trimmedLength := len(trimmedDescription)
-		if math.Mod(float64(trimmedLength), 3) == 0 {
-			// first convert price from string to float 64
+	for _, item := range receipt.Items {
+		trimmedDescription := strings.TrimSpace(item.ShortDescription)
+		length := len(trimmedDescription)
+		if length % 3 == 0 {
 			itemPrice, err := strconv.ParseFloat(item.Price, 64)
 			if err != nil {
-				fmt.Println("Error converting string to float:", err)
-				return 0
-			}		
-			//Get the ceiling/round up and then convert back to integer
+				log.Printf("Error parsing item price: %v", err)
+				continue
+			}
 			pointsAdded += int(math.Ceil(itemPrice * 0.2))
 		}
 	}
 	return pointsAdded
+
+}
+
+// Normalizes time to "HH:mm:ss" format
+func normalizeTime(input string) string {
+	if len(input) == 5 {
+		return input + ":00"
+	}
+	return input
 }
 
 // Adds and returns all the points awarded given rules stated above.  
 func AddAllPoints(receipt Receipt) (int, error) {
+
+	
 	totalPoints := 0
 
-	// Rule 1: Award 1 point for each alphanumeric character in retailer name
+	log.Infof("Received receipt: %+v", receipt)
+
+	// Rule 1
 	totalPoints += CountAlphanumericCharacters(receipt.Retailer)
 
-	// Rule 2: 50 points if the total is a round dollar amount with no cents.
+	// Rule 2
 	cents := GetCentValue(receipt.Total)
 	if cents == "00" {
 		totalPoints += 50
 	}
 
-	// Rule 3: 25 points if the total is a multiple of 0.25.
-	if IsMultiple(receipt.Total, .25) {
-		// true, add 25 points
+	// Rule 3
+	if IsMultiple(receipt.Total, 0.25) {
 		totalPoints += 25
-	} else {
-		// return false, add 0 points
-		totalPoints += 0
 	}
-	
-	// Rule 4: 5 points for every two items on the receipt.
+
+	// Rule 4
 	totalPoints += (CountNumItems(receipt) / 2) * 5
 
-	// Rule 5: 	If the trimmed length of the item description is a multiple of 3, 
-	// 			multiply the price by 0.2 and round up to the nearest integer. 
-	//			The result is the number of points earned.
+	// Rule 5
 	totalPoints += DescriptionLengthReward(receipt)
-	
-	// Rule 6: 6 points if the day in the purchase date is odd.
-	purchaseDate, err := time.Parse("2006-01-02", receipt.PurchaseDate) //Parse(date layout, date to be parsed)
+
+	// Rule 6
+	purchaseDate, err := time.Parse("2006-01-02", receipt.PurchaseDate)
 	if err != nil {
-		log.Printf(" Error parsing receipt purchase date \"%v\": %v \n", receipt.PurchaseDate, err)
+		log.Printf("Error parsing receipt purchase date \"%v\": %v\n", receipt.PurchaseDate, err)
 		return -1, errors.New("invalid purchase date given")
 	}
-
-	purchaseDay := purchaseDate.Day()
-	// % can be used here instead of math.Mod since I'm calculating mod of ints
-	if purchaseDay % 2 == 0 {
-		totalPoints += 0 // Even date, no additional points
-	} else {
-		// Odd date, award an additional 6 points
+	if purchaseDate.Day()%2 != 0 {
 		totalPoints += 6
 	}
 
-	// Rule 7: 	10 points if the time of purchase is after 2:00pm and before 4:00pm.
-	// timeFormat = receipt.PurchaseTime.Format("")
-	// layout := "03:04:05PM"
-	layout := "15:04" //15:04 format for military time
-	parsedTime, err := time.Parse(layout, receipt.PurchaseTime)  // time.Parse(layout, time string to parse)
+	// Rule 7: Time parsing
+	timeLayout := "15:04:05"
+	// Append ":00" to the time if needed
+	parsedTime, err := time.Parse(timeLayout, normalizeTime(receipt.PurchaseTime))
 	if err != nil {
-		log.Printf("Error parsing time: \"%v\" %v \n", receipt.PurchaseTime, err)
-		return -1, errors.New("Error in parsing time")
+		log.Printf("Error parsing time: \"%v\" %v\n", receipt.PurchaseTime, err)
+		return -1, errors.New("error in parsing time")
 	}
+	startTime, _ := time.Parse(timeLayout, "14:00:00")
+	endTime, _ := time.Parse(timeLayout, "16:00:00")
 
-	// Checks to see if time in current param is within start and end times
-	startTime, _ := time.Parse("15:04:05", "14:00:00") // 14:00:00 = 2:00pm
-	endTime, _ := time.Parse("15:04:05", "16:00:00")   // 16:00:00 = 4:00pm
 	if parsedTime.After(startTime) && parsedTime.Before(endTime) {
 		totalPoints += 10
-	} 
+	}
 
-	return totalPoints, nil 
+	log.Infof("Total points calculated: %d", totalPoints)
+	return totalPoints, nil
 }

@@ -11,7 +11,7 @@ import (
 // Receipt ID Params Struct:
 // Represents parameters that the API endpoint will take
 type ReceiptIdParams struct {
-	Id string 
+	Id string `json:"id"`
 }
 
 // PostResponse:
@@ -32,10 +32,10 @@ type GetResponse struct {
 // Represents reponse returned when an error occurs
 type Error struct {
 	//Error code 
-	Code int
+	Code int `json:"code"`
 
 	//Error message
-	Message string
+	Message string `json:"message"`
 }
 
 // Writes an error reponse to the http response writer

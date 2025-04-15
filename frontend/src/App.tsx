@@ -5,8 +5,8 @@ import './Modal.css';
 import ConfettiComponent from './ConfettiComponent';
 
 interface Item {
-  Description: string;
-  Price: string;
+  shortDescription: string;
+  price: string;
 }
 
 interface PostResponse {
@@ -33,7 +33,7 @@ const App: React.FC = () => {
   const [runConfetti, setRunConfetti] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const totalPrice = items.reduce((total, item) => total + parseFloat(item.Price), 0);
+  const totalPrice = items.reduce((total, item) => total + parseFloat(item.price), 0);
 
   useEffect(() => {
     setDimensions({
@@ -73,7 +73,7 @@ const App: React.FC = () => {
   const handleAddItem = () => {
     const price = parseFloat(itemPrice);
     if (itemName && !isNaN(price) && price > 0) {
-      const newItem: Item = { Description: itemName, Price: price.toString() };
+      const newItem: Item = { shortDescription: itemName, price: price.toString() };
       setItems((prevItems) => [...prevItems, newItem]);
       setItemName('');
       setItemPrice('');
@@ -215,7 +215,7 @@ const App: React.FC = () => {
       <ul className="items-list">
         {items.map((item, index) => (
           <li key={index} className="item">
-            {item.Description}: ${parseFloat(item.Price).toFixed(2)}
+            {item.shortDescription}: ${parseFloat(item.price).toFixed(2)}
           </li>
         ))}
       </ul>

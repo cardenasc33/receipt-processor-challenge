@@ -1,24 +1,24 @@
 package backend
 
 type Item struct {
-	Description string
-	Price       string
+	ShortDescription string `json:"shortDescription"`
+	Price            string `json:"price"`
 }
 
-// Id will be generated with uuid from POST endpoint
+// id will be generated with uuid from POST endpoint
 type Receipt struct {
-	Retailer     string
-	PurchaseDate string
-	PurchaseTime string
-	Items        []Item
-	Total        string
-	Id           string`json:"id,omitempty"`  // instructs encoding/json package to omit the field from the JSON output if it's "empty"
-	Points       int `json:"points,omitempty"` 
-
+	Retailer     string `json:"retailer"`
+	PurchaseDate string `json:"purchaseDate"`
+	PurchaseTime string `json:"purchaseTime"`
+	Total        string `json:"total"`
+	Items        []Item `json:"items"`
+	Id           string `json:"id,omitempty"` // instructs encoding/json package to omit the field from the JSON output if it's "empty"
+	Points       int    `json:"points,omitempty"`
 }
 
 type ReceiptDetails struct {
-	Id string
-	Points int64
+	Id string 	  `json:"id,omitempty"`
+	Points int64  `json:"points,omitempty"`
 }
+
 

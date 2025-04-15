@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import fetchMock from 'jest-fetch-mock';
-
 fetchMock.enableMocks();
 
 Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
